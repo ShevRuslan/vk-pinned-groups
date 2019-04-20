@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+.groups {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+}
+.groups .group:hover {
+    background-color: #f8f9fa;
+}
+.groups .group {
+    padding: 15px;
+    transition: 0.5s ease-in-out;
+    border-bottom: 1px solid #cccccc;
+}
+.groups .group a {
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #000000;
+}
+.groups .group img {
+    border-radius: 50%;
+    padding-right: 10px;
+}
