@@ -7,7 +7,7 @@ class Request {
     createRequest(method, config, token) {
         let url = window.config.api_url + method + '?';
         for (const param in config) {
-            let stringParam = param + '=' + config[param];
+            let stringParam =`${param}=${config[param]}`;
             stringParam += '&';
             url += stringParam;
         }
@@ -15,17 +15,15 @@ class Request {
 
         return url;
     }
-    request() {
+    async request() {
         const url = this.createRequest(this.method, this.config, this.token);
         const data = new FormData();
-        console.log(url);
         data.set('url', url);
-        fetch('./proxy.php', {
+        const response = await fetch('./proxy.php', {
             method: 'POST',
             body: data
-        })
-            .then(response => response.json())
-            .then(json => console.log(JSON.parse(json.response)));
+        });
+        return await response.json();
     }
 }
 
