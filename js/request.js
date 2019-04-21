@@ -1,8 +1,6 @@
 class Request {
-    constructor({method, config, TOKEN}) {
-        this.method = method;
-        this.config = config;
-        this.token = TOKEN || window.config.access_token;
+    constructor() {
+        this.token = window.config.access_token;
     }
     createRequest(method, config, token) {
         let url = window.config.api_url + method + '?';
@@ -15,8 +13,8 @@ class Request {
 
         return url;
     }
-    async request() {
-        const url = this.createRequest(this.method, this.config, this.token);
+    async request({method, config}) {
+        const url = this.createRequest(method, config, this.token);
         const data = new FormData();
         data.set('url', url);
         const response = await fetch('./proxy.php', {

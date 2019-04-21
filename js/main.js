@@ -1,20 +1,20 @@
-const req = new Request({
-    method: 'groups.getById',
-    config: {
-        'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
-        'fields': 'links,members_count,status',
-        'v': '5.95'
-    }
-});
+const req = new Request();
 
 
 class VkPinnedGroups {
-    constructor(props) {
+    constructor() {
         this.groups = null;
         this.init();
     }
     async getGroups() {
-        const groups = await req.request();
+        const groups = await req.request({
+            method: 'groups.getById',
+            config: {
+                'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
+                'fields': 'links,members_count,status',
+                'v': '5.95'
+            }
+        });
         this.groups = JSON.parse(groups.response);
     }
     viewGroups(groups) {
@@ -84,15 +84,16 @@ class VkPinnedGroups {
         })
     }
     async addNewGroup(ids) {
-        const request = new Request({
-            method: 'groups.getById',
-            config: {
-                'group_ids': ids,
-                'fields': 'links,members_count,status',
-                'v': '5.95'
+        const response = await req.request(
+            {
+                method: 'groups.getById',
+                config: {
+                    'group_ids': ids,
+                    'fields': 'links,members_count,status',
+                    'v': '5.95'
+                }
             }
-        });
-        const response = await request.request();
+        );
         const newGroups = JSON.parse(response.response);
         newGroups.response.forEach(Group => {
             this.groups.response.push(Group);
