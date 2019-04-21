@@ -15,12 +15,13 @@ class VkPinnedGroups {
     }
     async getGroups() {
         const groups = await req.request();
-        return JSON.parse(groups.response);
+        this.groups = JSON.parse(groups.response);
     }
-    async viewGroups() {
-        const groups = await this.getGroups();
-        console.log(groups);
+    viewGroups(groups) {
         const wrapperGroups = document.querySelector('.groups');
+        if (wrapperGroups.children.length >= 1) {
+            wrapperGroups.innerHTML = '';
+        }
         groups.response.forEach(Group => {
             const wrap = document.createElement('div');
             wrap.classList.add('group');
@@ -86,16 +87,21 @@ class VkPinnedGroups {
         const request = new Request({
             method: 'groups.getById',
             config: {
-                'group_id': ids,
+                'group_ids': ids,
                 'fields': 'links,members_count,status',
                 'v': '5.95'
             }
         });
-        const groups = await request.request()
-        console.log(JSON.parse(groups.response));
+        const response = await request.request();
+        const newGroups = JSON.parse(response.response);
+        newGroups.response.forEach(Group => {
+            this.groups.response.push(Group);
+        })
+        this.viewGroups(this.groups);
     }
-    init() {
-        this.viewGroups();
+    async init() {
+        await this.getGroups();
+        this.viewGroups(this.groups);
         this.eventAddNewGroup();
     }
 }
