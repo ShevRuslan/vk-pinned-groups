@@ -75,8 +75,28 @@ class VkPinnedGroups {
 
         return wrapper;
     }
+    eventAddNewGroup() {
+        const inputAdd = document.querySelector('.id');
+        const buttonAdd = document.querySelector('.add');
+        buttonAdd.addEventListener('click', () => {
+            this.addNewGroup(inputAdd.value);
+        })
+    }
+    async addNewGroup(ids) {
+        const request = new Request({
+            method: 'groups.getById',
+            config: {
+                'group_id': ids,
+                'fields': 'links,members_count,status',
+                'v': '5.95'
+            }
+        });
+        const groups = await request.request()
+        console.log(JSON.parse(groups.response));
+    }
     init() {
         this.viewGroups();
+        this.eventAddNewGroup();
     }
 }
 
