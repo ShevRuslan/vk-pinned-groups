@@ -2,7 +2,7 @@ const req = new Request({
     method: 'groups.getById',
     config: {
         'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
-        'fields': 'links,members_count',
+        'fields': 'links,members_count,status',
         'v': '5.95'
     }
 });
@@ -33,14 +33,15 @@ class VkPinnedGroups {
                 members: Group.members_count,
                 name: Group.name,
                 photo: Group.photo_100,
+                status: Group.status
             }
             this.eventHover(wrap, data);
             wrapperGroups.appendChild(wrap);
         })
     }
-    eventHover(group, {members, name, photo}) {
+    eventHover(group, {members, name, photo, shortName, status}) {
         group.addEventListener('mouseenter', () => {
-            const htmlElement = this.viewShortDescription({ members, name, photo });
+            const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status });
             const desc = group.querySelector('.modal-wrapper-group');
             if(desc === null) {
                 group.appendChild(htmlElement);
@@ -56,15 +57,18 @@ class VkPinnedGroups {
             }
         })
     }
-    viewShortDescription({members, name, photo}) {
+    viewShortDescription({members, name, photo, shortName, status}) {
         const wrapper = document.createElement('div');
         wrapper.innerHTML = 
         `<div class="wrapper-image">
             <img src="${photo}"/>
         </div>
         <div class="description"> 
-            <h3>${name}</h3>
-            <span>${members}</span>
+            <h4>${name}</h4>
+            <span class="status">${status}</span>
+            <span>Участников: ${members}</span>
+            <a href="https://vk.com/${shortName}" target="_blank" >Перейти</a>
+            <button class="quit-group">Выйти из группы</button>
         </div>`
         wrapper.classList.add('modal-wrapper-group');
 

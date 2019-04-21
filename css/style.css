@@ -58,9 +58,10 @@
     display: flex;
     flex-direction: column;
 }
-.modal-wrapper-group .description h4 {
+.modal-wrapper-group .description .status {
+    font-size: 12px;
     margin-bottom: 15px;
-    text-align: center;
+    font-style: italic;
 }
 .modal-wrapper-group .description a {
     font-family: sans-serif;
