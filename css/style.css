@@ -21,6 +21,7 @@
     padding: 15px;
     transition: 0.5s ease-in-out;
     border-bottom: 1px solid #cccccc;
+    position: relative;
 }
 .groups .group a {
     display: flex;
@@ -32,4 +33,17 @@
 .groups .group img {
     border-radius: 50%;
     margin-right: 10px;
+}
+.modal-wrapper-group {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+    background-color: #fff;
+    position: absolute;
+    bottom: -130px;
+    width: 100%;
+    left: 0;
+    z-index: 9999;
+    padding: 15px;
 }
