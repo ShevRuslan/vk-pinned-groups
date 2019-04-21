@@ -11,7 +11,7 @@ const req = new Request({
 class VkPinnedGroups {
     constructor(props) {
         this.groups = null;
-        this.viewGroups();
+        this.init();
     }
     async getGroups() {
         const groups = await req.request();
@@ -19,6 +19,7 @@ class VkPinnedGroups {
     }
     async viewGroups() {
         const groups = await this.getGroups();
+        console.log(groups);
         const wrapperGroups = document.querySelector('.groups');
         groups.response.forEach(Group => {
             const wrap = document.createElement('div');
@@ -28,8 +29,22 @@ class VkPinnedGroups {
                     <img src="${Group.photo_50}"/>
                     <span>${Group.name}</span>
                 </a>`;
+            const data = {
+                members: Group.members_count,
+                name: Group.name,
+                photo: Group.photo_100,
+            }
+            this.eventHover(wrap, data);
             wrapperGroups.appendChild(wrap);
         })
+    }
+    eventHover(group, {members, name, photo}) {
+        group.addEventListener('mouseenter', () => {
+            console.log(members, name, photo);
+        })
+    }
+    init() {
+        this.viewGroups();
     }
 }
 
