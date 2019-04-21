@@ -7,15 +7,22 @@ class VkPinnedGroups {
         this.init();
     }
     async getGroups() {
-        const groups = await req.request({
-            method: 'groups.getById',
-            config: {
-                'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
-                'fields': 'links,members_count,status',
-                'v': '5.95'
-            }
-        });
-        this.groups = JSON.parse(groups.response);
+        const lsGroups = localStorage.getItem('groups');
+        if (lsGroups === null) {
+            const groups = await req.request({
+                method: 'groups.getById',
+                config: {
+                    'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
+                    'fields': 'links,members_count,status',
+                    'v': '5.95'
+                }
+            });
+            this.groups = JSON.parse(groups.response);
+            this.save(this.groups);
+        }
+        else {
+            this.groups = JSON.parse(lsGroups);
+        }
     }
     viewGroups(groups) {
         const wrapperGroups = document.querySelector('.groups');
@@ -58,6 +65,9 @@ class VkPinnedGroups {
                 desc.style.display = 'none';
             }
         })
+    }
+    save(groups) {
+        localStorage.setItem('groups', JSON.stringify(groups));
     }
     viewShortDescription({members, name, photo, shortName, status}) {
         const wrapper = document.createElement('div');
@@ -106,6 +116,7 @@ class VkPinnedGroups {
                 this.groups.response.push(Group);
             }
         })
+        this.save(this.groups);
         this.viewGroups(this.groups);
     }
     async init() {
