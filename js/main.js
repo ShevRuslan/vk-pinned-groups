@@ -40,8 +40,35 @@ class VkPinnedGroups {
     }
     eventHover(group, {members, name, photo}) {
         group.addEventListener('mouseenter', () => {
-            console.log(members, name, photo);
+            const htmlElement = this.viewShortDescription({ members, name, photo });
+            const desc = group.querySelector('.modal-wrapper-group');
+            if(desc === null) {
+                group.appendChild(htmlElement);
+            }
+            else {
+                desc.style.display = 'flex';
+            }
         })
+        group.addEventListener('mouseleave', () => {
+            const desc = group.querySelector('.modal-wrapper-group');
+            if(desc != null) {
+                desc.style.display = 'none';
+            }
+        })
+    }
+    viewShortDescription({members, name, photo}) {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = 
+        `<div class="wrapper-image">
+            <img src="${photo}"/>
+        </div>
+        <div class="description"> 
+            <h3>${name}</h3>
+            <span>${members}</span>
+        </div>`
+        wrapper.classList.add('modal-wrapper-group');
+
+        return wrapper;
     }
     init() {
         this.viewGroups();
