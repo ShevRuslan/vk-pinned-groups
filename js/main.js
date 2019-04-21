@@ -33,6 +33,7 @@ class VkPinnedGroups {
                 members: Group.members_count,
                 name: Group.name,
                 photo: Group.photo_100,
+                shortName: Group.screen_name,
                 status: Group.status
             }
             this.eventHover(wrap, data);
