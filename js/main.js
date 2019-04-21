@@ -96,7 +96,15 @@ class VkPinnedGroups {
         );
         const newGroups = JSON.parse(response.response);
         newGroups.response.forEach(Group => {
-            this.groups.response.push(Group);
+            let exist = false;
+            this.groups.response.forEach(Groups => {
+                if (Groups.id === Group.id) {
+                    exist = true;
+                }
+            })
+            if (exist === false) {
+                this.groups.response.push(Group);
+            }
         })
         this.viewGroups(this.groups);
     }
