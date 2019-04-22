@@ -80,7 +80,7 @@ class VkPinnedGroups {
             <span class="status">${status}</span>
             <span>Участников: ${members}</span>
             <a href="https://vk.com/${shortName}" target="_blank" >Перейти</a>
-            <button class="quit-group">Выйти из группы</button>
+            <button class="quit-group">Удалить группу</button>
         </div>`
         wrapper.classList.add('modal-wrapper-group');
 
