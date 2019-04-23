@@ -42,15 +42,16 @@ class VkPinnedGroups {
                 name: Group.name,
                 photo: Group.photo_100,
                 shortName: Group.screen_name,
-                status: Group.status
+                status: Group.status,
+                id: Group.id
             }
             this.eventHover(wrap, data);
             wrapperGroups.appendChild(wrap);
         })
     }
-    eventHover(group, {members, name, photo, shortName, status}) {
+    eventHover(group, {members, name, photo, shortName, status, id}) {
         group.addEventListener('mouseenter', () => {
-            const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status });
+            const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
             const desc = group.querySelector('.modal-wrapper-group');
             if(desc === null) {
                 group.appendChild(htmlElement);
@@ -69,7 +70,7 @@ class VkPinnedGroups {
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
-    viewShortDescription({members, name, photo, shortName, status}) {
+    viewShortDescription({members, name, photo, shortName, status, id}) {
         const wrapper = document.createElement('div');
         wrapper.innerHTML = 
         `<div class="wrapper-image">
@@ -83,7 +84,10 @@ class VkPinnedGroups {
             <button class="quit-group">Удалить группу</button>
         </div>`
         wrapper.classList.add('modal-wrapper-group');
-
+        const deleteButton = wrapper.querySelector('.quit-group');
+        deleteButton.addEventListener('click', () => {
+            this.deleteGroup(id);
+        })
         return wrapper;
     }
     eventAddNewGroup() {
@@ -92,6 +96,21 @@ class VkPinnedGroups {
         buttonAdd.addEventListener('click', () => {
             this.addNewGroup(inputAdd.value);
         })
+    }
+    deleteGroup(id) {
+        console.log(this.groups.response);
+        const idx = this.groups.response.findIndex((Element) => Element.id === id);
+
+        const newArray = [
+            ...this.groups.response.slice(0, idx),
+            ...this.groups.response.slice(idx + 1)
+        ];
+        this.groups.response = newArray;
+        
+        console.log(this.groups.response);
+        
+        this.save(this.groups);
+        this.viewGroups(this.groups);
     }
     async addNewGroup(ids) {
         const response = await req.request(
