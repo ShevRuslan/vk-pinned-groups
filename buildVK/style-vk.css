@@ -1,0 +1,26 @@
+
+.wrapper-icons-group {
+    display: flex;
+    flex-direction: column;
+}
+.wrapper-icons-group .group {
+    position: relative;
+    margin-top: 7px;
+}
+.wrapper-icons-group .group a {
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+.wrapper-icons-group .group img {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.wrapper-icons-group .group p {
+    width: 100px;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+    overflow: hidden;
+    white-space: nowrap;
+}
