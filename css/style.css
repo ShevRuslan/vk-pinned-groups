@@ -55,7 +55,7 @@
     flex-direction: column;
     box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
     min-width: 500px;
-    height: 565px;
+    height: 567px;
     overflow-y: auto;
     z-index: 1;
 }

@@ -98,7 +98,6 @@ class VkPinnedGroups {
         })
     }
     deleteGroup(id) {
-        console.log(this.groups.response);
         const idx = this.groups.response.findIndex((Element) => Element.id === id);
 
         const newArray = [
@@ -107,8 +106,7 @@ class VkPinnedGroups {
         ];
         this.groups.response = newArray;
         
-        console.log(this.groups.response);
-        
+
         this.save(this.groups);
         this.viewGroups(this.groups);
     }
