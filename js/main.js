@@ -100,11 +100,7 @@ class VkPinnedGroups {
     deleteGroup(id) {
         const idx = this.groups.response.findIndex((Element) => Element.id === id);
 
-        const newArray = [
-            ...this.groups.response.slice(0, idx),
-            ...this.groups.response.slice(idx + 1)
-        ];
-        this.groups.response = newArray;
+        this.groups.response.splice(idx, 1);
         
 
         this.save(this.groups);
