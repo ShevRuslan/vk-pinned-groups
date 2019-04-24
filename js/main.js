@@ -118,19 +118,21 @@ class VkPinnedGroups {
             }
         );
         const newGroups = JSON.parse(response.response);
-        newGroups.response.forEach(Group => {
-            let exist = false;
-            this.groups.response.forEach(Groups => {
-                if (Groups.id === Group.id) {
-                    exist = true;
+        if (newGroups.response !== undefined) {
+            newGroups.response.forEach(Group => {
+                let exist = false;
+                this.groups.response.forEach(Groups => {
+                    if (Groups.id === Group.id) {
+                        exist = true;
+                    }
+                })
+                if (exist === false) {
+                    this.groups.response.push(Group);
                 }
             })
-            if (exist === false) {
-                this.groups.response.push(Group);
-            }
-        })
-        this.save(this.groups);
-        this.viewGroups(this.groups);
+            this.save(this.groups);
+            this.viewGroups(this.groups);
+        }
     }
     async init() {
         await this.getGroups();

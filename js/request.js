@@ -17,10 +17,18 @@ class Request {
         const url = this.createRequest(method, config, this.token);
         const data = new FormData();
         data.set('url', url);
-        const response = await fetch('./proxy.php', {
-            method: 'POST',
-            body: data
-        });
+        let response = null;
+        try {
+            response = await fetch(url, {
+                method: 'GET',
+            });  
+        }
+        catch (error) {
+            response = await fetch('./proxy.php', {
+                method: 'POST',
+                body: data
+            });   
+        }
         return await response.json();
     }
 }
