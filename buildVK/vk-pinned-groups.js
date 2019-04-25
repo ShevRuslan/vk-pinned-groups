@@ -85,6 +85,43 @@ class VkPinnedGroups {
             wrapperGroups.appendChild(wrap);
         })
     }
+    dropdownVKTemplate() {
+        let head_nav_btns = document.querySelector('.head_nav');
+        let top_notify_btn = document.querySelector('.head_nav_btns');
+
+        if (head_nav_btns && top_notify_btn) {
+            const openDropdown = document.createElement('div');
+            const dropdown = document.createElement('div');    
+            dropdown.innerHTML = this.getTemplate();
+            openDropdown.appendChild(dropdown);
+            openDropdown.classList.add('head_nav_item', 'fl_l', 'settings-groups-control')
+            head_nav_btns.insertBefore(openDropdown, top_notify_btn);
+        }
+    }
+    getTemplate() {
+        return `
+        <span class="option_name">VKPinnedGroups</span>
+        <div class="tt_w tt_default tt_up settings-groups">
+            <div class="wrapped">
+                <div class="notify_sources_tt_content">
+                    <div class="content">
+                        <div class="line_cell clear_fix ui_rmenu_item_sel cur_default ">
+                            <div class="option_name cur_default">Количество групп</div>
+                        </div>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                        <a class="option_name">Настройки</a>
+                        </div>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                        <a class="option_name">Удалить все группы</a>
+                        </div>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                        <a class="option_name">Убрать группы</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
     eventHover(group, {members, name, photo, shortName, status, id}) {
         // group.addEventListener('mouseenter', () => {
         //     const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
@@ -174,6 +211,7 @@ class VkPinnedGroups {
         await this.getGroups();
         this.viewGroups(this.groups);
         this.eventAddNewGroup();
+        this.dropdownVKTemplate();
     }
 }
 

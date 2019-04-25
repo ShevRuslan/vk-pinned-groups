@@ -1,11 +1,38 @@
-
+#ads_left {
+    display: none;
+}
+.notify_sources_tt_content {
+    min-width: 235px;
+    max-width: 300px;
+    max-height: 235px;
+    width: auto!important;
+    width: 270px;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.left_menu_nav_wrap {
+    display: none;
+}
 .wrapper-icons-group {
     display: flex;
     flex-direction: column;
 }
+.notify_sources_tt_content .line_cell {
+    background-color: transparent;
+    border-left-color: transparent;
+}
 .wrapper-icons-group .group {
     position: relative;
     margin-top: 7px;
+}
+.notify_sources_tt_content .line_cell a {
+    text-decoration: none;
+}
+.notify_sources_tt_content .line_cell:hover {
+    padding: 8px 0 8px 14px;
+    border-left: 2px solid #5181b8;
 }
 .wrapper-icons-group .group a {
     display: flex;
@@ -23,4 +50,42 @@
     word-wrap: normal;
     overflow: hidden;
     white-space: nowrap;
+}
+.notify_sources_tt_content .line_cell {
+    padding: 8px 0 8px 14px;
+    cursor: pointer;
+}
+.settings-groups {
+    visibility: hidden;
+    background: #fff;
+    z-index: 800;
+    border: 1px solid #c5d0db;
+    padding: 4px 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -o-transition: opacity 100ms linear, top 100ms linear, visibility 100ms linear;
+    transition: opacity 100ms linear, top 100ms linear, visibility 100ms linear;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    z-index: 1501;
+    cursor: default;
+    font-size: 12.5px;
+    color: #222;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    position: relative;
+    position: absolute;
+}
+.settings-groups-control {
+    height: 42px;
+    color: #fff;display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.settings-groups-control:hover .settings-groups {
+    visibility: visible;
+    opacity: 1;
 }
