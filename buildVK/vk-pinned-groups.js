@@ -73,15 +73,6 @@ class VkPinnedGroups {
                     <img src="${Group.photo_50}"/>
                     <p>${Group.name}</p>
                 </a>`;
-            const data = {
-                members: Group.members_count,
-                name: Group.name,
-                photo: Group.photo_100,
-                shortName: Group.screen_name,
-                status: Group.status,
-                id: Group.id
-            }
-            this.eventHover(wrap, data);
             wrapperGroups.appendChild(wrap);
         })
     }
@@ -122,24 +113,24 @@ class VkPinnedGroups {
             </div>
         </div>`;
     }
-    eventHover(group, {members, name, photo, shortName, status, id}) {
-        // group.addEventListener('mouseenter', () => {
-        //     const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
-        //     const desc = group.querySelector('.modal-wrapper-group');
-        //     if(desc === null) {
-        //         group.appendChild(htmlElement);
-        //     }
-        //     else {
-        //         desc.style.display = 'flex';
-        //     }
-        // })
-        // group.addEventListener('mouseleave', () => {
-        //     const desc = group.querySelector('.modal-wrapper-group');
-        //     if(desc != null) {
-        //         desc.style.display = 'none';
-        //     }
-        // })
-    }
+    // eventHover(group, {members, name, photo, shortName, status, id}) {
+    //     group.addEventListener('mouseenter', () => {
+    //         const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
+    //         const desc = group.querySelector('.modal-wrapper-group');
+    //         if(desc === null) {
+    //             group.appendChild(htmlElement);
+    //         }
+    //         else {
+    //             desc.style.display = 'flex';
+    //         }
+    //     })
+    //     group.addEventListener('mouseleave', () => {
+    //         const desc = group.querySelector('.modal-wrapper-group');
+    //         if(desc != null) {
+    //             desc.style.display = 'none';
+    //         }
+    //     })
+    // }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
