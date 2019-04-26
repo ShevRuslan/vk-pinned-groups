@@ -32,7 +32,6 @@
 }
 .notify_sources_tt_content .line_cell:hover {
     padding: 8px 0 8px 14px;
-    border-left: 2px solid #5181b8;
 }
 .wrapper-icons-group .group a {
     display: flex;
