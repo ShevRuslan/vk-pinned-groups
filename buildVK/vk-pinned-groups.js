@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
+
     const sidebar = document.querySelector('#side_bar_inner');
     const wrapper = document.createElement('div');
     wrapper.classList.add('wrapper-icons-group');    
@@ -80,7 +81,7 @@ class VkPinnedGroups {
         let head_nav_btns = document.querySelector('.head_nav');
         let top_notify_btn = document.querySelector('.head_nav_btns');
 
-        if (head_nav_btns && top_notify_btn) {
+        if (head_nav_btns && top_notify_btn && document.querySelector('.settings-groups-control') === null) {
             const openDropdown = document.createElement('div');
             const dropdown = document.createElement('div');    
             dropdown.innerHTML = this.getTemplate(this.groups.length);
@@ -100,37 +101,22 @@ class VkPinnedGroups {
                             <div class="option_name">Количество групп <a class="count">${count}</a></div>
                         </div>
                         <div class="line_cell clear_fix ui_rmenu_item_sel ">
-                        <a class="option_name">Настройки</a>
+                            <a class="option_name">Добавить группу</a>
                         </div>
                         <div class="line_cell clear_fix ui_rmenu_item_sel ">
-                        <a class="option_name">Удалить все группы</a>
+                            <a class="option_name">Обновить группы</a>
                         </div>
                         <div class="line_cell clear_fix ui_rmenu_item_sel ">
-                        <a class="option_name">Убрать группы</a>
+                            <a class="option_name">Удалить все группы</a>
+                        </div>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                            <a class="option_name">Убрать группы</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>`;
     }
-    // eventHover(group, {members, name, photo, shortName, status, id}) {
-    //     group.addEventListener('mouseenter', () => {
-    //         const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
-    //         const desc = group.querySelector('.modal-wrapper-group');
-    //         if(desc === null) {
-    //             group.appendChild(htmlElement);
-    //         }
-    //         else {
-    //             desc.style.display = 'flex';
-    //         }
-    //     })
-    //     group.addEventListener('mouseleave', () => {
-    //         const desc = group.querySelector('.modal-wrapper-group');
-    //         if(desc != null) {
-    //             desc.style.display = 'none';
-    //         }
-    //     })
-    // }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
@@ -201,7 +187,6 @@ class VkPinnedGroups {
     async init() {
         await this.getGroups();
         this.viewGroups(this.groups);
-        this.eventAddNewGroup();
         this.dropdownVKTemplate();
     }
 }
