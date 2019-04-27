@@ -120,26 +120,6 @@ class VkPinnedGroups {
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
-    viewShortDescription({members, name, photo, shortName, status, id}) {
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = 
-        `<div class="wrapper-image">
-            <img src="${photo}"/>
-        </div>
-        <div class="description"> 
-            <h4>${name}</h4>
-            <span class="status">${status}</span>
-            <span>Участников: ${members}</span>
-            <a href="https://vk.com/${shortName}" target="_blank" >Перейти</a>
-            <button class="quit-group">Удалить группу</button>
-        </div>`
-        wrapper.classList.add('modal-wrapper-group');
-        const deleteButton = wrapper.querySelector('.quit-group');
-        deleteButton.addEventListener('click', () => {
-            this.deleteGroup(id);
-        })
-        return wrapper;
-    }
     eventAddNewGroup() {
         const inputAdd = document.querySelector('.id');
         const buttonAdd = document.querySelector('.add');
