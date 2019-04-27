@@ -84,13 +84,13 @@ class VkPinnedGroups {
         if (head_nav_btns && top_notify_btn && document.querySelector('.settings-groups-control') === null) {
             const openDropdown = document.createElement('div');
             const dropdown = document.createElement('div');    
-            dropdown.innerHTML = this.getTemplate(this.groups.length);
+            dropdown.innerHTML = this.getDropdownTemplate(this.groups.length);
             openDropdown.appendChild(dropdown);
             openDropdown.classList.add('head_nav_item', 'fl_l', 'settings-groups-control')
             head_nav_btns.insertBefore(openDropdown, top_notify_btn);
         }
     }
-    getTemplate(count) {
+    getDropdownTemplate(count) {
         return `
         <span class="option_name">VKPinnedGroups</span>
         <div class="tt_w tt_default tt_up settings-groups">
