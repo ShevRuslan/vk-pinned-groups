@@ -39,16 +39,17 @@ const req = new Request();
 
 class VkPinnedGroups {
     constructor() {
+        this.defaultIDS = '76746437,howdyho_net,ovsyanochan,forwebdev,marvel';
         this.groups = null;
         this.init();
     }
-    async getGroups() {
+    async getGroups(ids) {
         const lsGroups = localStorage.getItem('groups');
         if (lsGroups === null) {
             const groups = await req.request({
                 method: 'groups.getById',
                 config: {
-                    'group_ids': '76746437,howdyho_net,ovsyanochan,forwebdev,marvel',
+                    'group_ids': ids || this.defaultIDS,
                     'fields': 'links,members_count,status',
                     'v': '5.95'
                 }
@@ -129,24 +130,26 @@ class VkPinnedGroups {
     }
     eventDropdown({addElement, updateElement, removeElement, offElement}) {
         this.update(updateElement);
+        this.eventAddNewGroup(addElement)
     }
     update(button) {
         button.addEventListener('click', () => {
-            localStorage.clear();
-            this.getGroups().then(() => {
-                this.viewGroups(this.groups);
-            });
+            let ids = '';
+            this.groups.forEach(Group => {
+                ids += Group.screen_name + ',';
+            })
+            this.getGroups(ids);
+            this.viewGroups(this.groups);
         })
     }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
-    eventAddNewGroup() {
-        // const inputAdd = document.querySelector('.id');
-        // const buttonAdd = document.querySelector('.add');
-        // buttonAdd.addEventListener('click', () => {
-        //     this.addNewGroup(inputAdd.value);
-        // })
+    eventAddNewGroup(buttonAdd) {
+        buttonAdd.addEventListener('click', () => {
+            const newGroups = prompt('Введите новую группу');
+            this.addNewGroup(newGroups);
+        })
     }
     deleteGroup(id) {
         const idx = this.groups.findIndex((Element) => Element.id === id);
@@ -168,11 +171,11 @@ class VkPinnedGroups {
                 }
             }
         );
-        const newGroups = JSON.parse(response);
+        const newGroups = response;
         if (newGroups !== undefined) {
-            newGroups.forEach(Group => {
+            newGroups.response.forEach(Group => {
                 let exist = false;
-                this.groups.response.forEach(Groups => {
+                this.groups.forEach(Groups => {
                     if (Groups.id === Group.id) {
                         exist = true;
                     }
@@ -186,7 +189,7 @@ class VkPinnedGroups {
         }
     }
     async init() {
-        await this.getGroups();
+        await this.getGroups(this.defaultIDS);
         this.viewGroups(this.groups);
         this.dropdownVKTemplate();
     }
