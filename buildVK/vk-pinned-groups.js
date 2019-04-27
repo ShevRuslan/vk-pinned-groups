@@ -48,7 +48,7 @@ class VkPinnedGroups {
             const groups = await req.request({
                 method: 'groups.getById',
                 config: {
-                    'group_ids': '76746437,howdyho_net,ovsyanochan,countryballs_re,forwebdev,marvel',
+                    'group_ids': '76746437,howdyho_net,ovsyanochan,forwebdev,marvel',
                     'fields': 'links,members_count,status',
                     'v': '5.95'
                 }
@@ -87,7 +87,17 @@ class VkPinnedGroups {
             dropdown.innerHTML = this.getDropdownTemplate(this.groups.length);
             openDropdown.appendChild(dropdown);
             openDropdown.classList.add('head_nav_item', 'fl_l', 'settings-groups-control')
+
+
+            const settingsElements = {
+                addElement:    dropdown.querySelector('.add-new-group'),
+                updateElement: dropdown.querySelector('.update-groups'),
+                removeElement: dropdown.querySelector('.remove-groups'),
+                offElement:    dropdown.querySelector('.off-libs'),
+            }
+            this.eventDropdown(settingsElements);
             head_nav_btns.insertBefore(openDropdown, top_notify_btn);
+
         }
     }
     getDropdownTemplate(count) {
@@ -100,32 +110,43 @@ class VkPinnedGroups {
                         <div class="line_cell clear_fix ui_rmenu_item_sel">
                             <div class="option_name">Количество групп <a class="count">${count}</a></div>
                         </div>
-                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                        <div class="line_cell clear_fix ui_rmenu_item_sel add-new-group">
                             <a class="option_name">Добавить группу</a>
                         </div>
-                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
+                        <div class="line_cell clear_fix ui_rmenu_item_sel update-groups">
                             <a class="option_name">Обновить группы</a>
                         </div>
-                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
-                            <a class="option_name">Удалить все группы</a>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel remove-groups">
+                            <a class="option_name">Удалить группы</a>
                         </div>
-                        <div class="line_cell clear_fix ui_rmenu_item_sel ">
-                            <a class="option_name">Убрать группы</a>
+                        <div class="line_cell clear_fix ui_rmenu_item_sel off-libs">
+                            <a class="option_name">Выключить библиотеку</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>`;
     }
+    eventDropdown({addElement, updateElement, removeElement, offElement}) {
+        this.update(updateElement);
+    }
+    update(button) {
+        button.addEventListener('click', () => {
+            localStorage.clear();
+            this.getGroups().then(() => {
+                this.viewGroups(this.groups);
+            });
+        })
+    }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
     }
     eventAddNewGroup() {
-        const inputAdd = document.querySelector('.id');
-        const buttonAdd = document.querySelector('.add');
-        buttonAdd.addEventListener('click', () => {
-            this.addNewGroup(inputAdd.value);
-        })
+        // const inputAdd = document.querySelector('.id');
+        // const buttonAdd = document.querySelector('.add');
+        // buttonAdd.addEventListener('click', () => {
+        //     this.addNewGroup(inputAdd.value);
+        // })
     }
     deleteGroup(id) {
         const idx = this.groups.findIndex((Element) => Element.id === id);
