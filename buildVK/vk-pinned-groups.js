@@ -49,7 +49,7 @@ class VkPinnedGroups {
             const groups = await req.request({
                 method: 'groups.getById',
                 config: {
-                    'group_ids': ids || this.defaultIDS,
+                    'group_ids': ids,
                     'fields': 'links,members_count,status',
                     'v': '5.95'
                 }
@@ -67,16 +67,18 @@ class VkPinnedGroups {
         if (wrapperGroups.children.length >= 1) {
             wrapperGroups.innerHTML = '';
         }
-        groups.forEach(Group => {
-            const wrap = document.createElement('div');
-            wrap.classList.add('group');
-            wrap.innerHTML =
-                `<a href="https://vk.com/${Group.screen_name}" target="_blank">
-                    <img src="${Group.photo_50}"/>
-                    <p>${Group.name}</p>
-                </a>`;
-            wrapperGroups.appendChild(wrap);
-        })
+        if (groups !== null) {
+            groups.forEach(Group => {
+                const wrap = document.createElement('div');
+                wrap.classList.add('group');
+                wrap.innerHTML =
+                    `<a href="https://vk.com/${Group.screen_name}" target="_blank">
+                        <img src="${Group.photo_50}"/>
+                        <p>${Group.name}</p>
+                    </a>`;
+                wrapperGroups.appendChild(wrap);
+            })
+        }
     }
     dropdownVKTemplate() {
         let head_nav_btns = document.querySelector('.head_nav');
@@ -127,6 +129,15 @@ class VkPinnedGroups {
     }
     eventDropdown({addElement, removeElement, offElement}) {
         this.eventAddNewGroup(addElement)
+        this.deleteAllGroups(removeElement);
+    }
+    deleteAllGroups(buttonRemove) {
+        buttonRemove.addEventListener('click', () => {
+            localStorage.clear();
+            this.groups = null;
+            this.viewGroups(this.groups);
+            document.querySelector('.settings-groups .count').textContent = '0'
+        })
     }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
