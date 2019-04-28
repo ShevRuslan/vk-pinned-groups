@@ -114,7 +114,7 @@ class VkPinnedGroups {
     getDropdownTemplate(count, enable) {
         const text = enable == true ? 'Выключить библиотеку' : 'Включить библиотеку'
         return `
-        <span class="option_name">VKPinnedGroups</span>
+        <span class="option_name">VK</span>
         <div class="tt_w tt_default tt_up settings-groups">
             <div class="wrapped">
                 <div class="notify_sources_tt_content">
