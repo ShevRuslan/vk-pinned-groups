@@ -39,9 +39,17 @@ const req = new Request();
 
 class VkPinnedGroups {
     constructor() {
+        const lsEnable = JSON.parse(localStorage.getItem('enableVKPinnedGroups'));
         this.defaultIDS = '76746437,howdyho_net,ovsyanochan,forwebdev,marvel';
         this.groups = null;
-        this.init();
+        this.enable = null;
+        if (lsEnable != null) {
+            this.enable = JSON.parse(localStorage.getItem('enableVKPinnedGroups'));
+        }
+        else {
+            this.enable = true;
+        }
+        this.init(this.enable);
     }
     async getGroups(ids) {
         const lsGroups = localStorage.getItem('groups');
@@ -80,14 +88,14 @@ class VkPinnedGroups {
             })
         }
     }
-    dropdownVKTemplate() {
+    dropdownVKTemplate(count, enable) {
         let head_nav_btns = document.querySelector('.head_nav');
         let top_notify_btn = document.querySelector('.head_nav_btns');
 
         if (head_nav_btns && top_notify_btn && document.querySelector('.settings-groups-control') === null) {
             const openDropdown = document.createElement('div');
             const dropdown = document.createElement('div');    
-            dropdown.innerHTML = this.getDropdownTemplate(this.groups.length);
+            dropdown.innerHTML = this.getDropdownTemplate(count, enable);
             openDropdown.appendChild(dropdown);
             openDropdown.classList.add('head_nav_item', 'fl_l', 'settings-groups-control')
 
@@ -103,7 +111,8 @@ class VkPinnedGroups {
 
         }
     }
-    getDropdownTemplate(count) {
+    getDropdownTemplate(count, enable) {
+        const text = enable == true ? 'Выключить библиотеку' : 'Включить библиотеку'
         return `
         <span class="option_name">VKPinnedGroups</span>
         <div class="tt_w tt_default tt_up settings-groups">
@@ -120,7 +129,7 @@ class VkPinnedGroups {
                             <a class="option_name">Удалить группы</a>
                         </div>
                         <div class="line_cell clear_fix ui_rmenu_item_sel off-libs">
-                            <a class="option_name">Выключить библиотеку</a>
+                            <a class="option_name">${text}</a>
                         </div>
                     </div>
                 </div>
@@ -130,10 +139,30 @@ class VkPinnedGroups {
     eventDropdown({addElement, removeElement, offElement}) {
         this.eventAddNewGroup(addElement)
         this.deleteAllGroups(removeElement);
+        this.offLibs(offElement);
+    }
+    offLibs(buttonOff) {
+        buttonOff.addEventListener('click', () => {
+            this.enable = !this.enable;
+            if (this.enable) {
+                document.querySelector('.settings-groups .off-libs a').textContent = 'Выключить библиотеку' 
+                this.init(this.enable);
+                document.querySelector('.settings-groups .count').textContent = this.groups.length
+            }
+            else {
+                document.querySelector('.settings-groups .off-libs a').textContent = 'Включить библиотеку'
+                const wrapperGroups = document.querySelector('.wrapper-icons-group');
+                if (wrapperGroups.children.length >= 1) {
+                    wrapperGroups.innerHTML = '';
+                }
+                document.querySelector('.settings-groups .count').textContent = '0'
+            }
+            localStorage.setItem('enableVKPinnedGroups', this.enable);
+        })
     }
     deleteAllGroups(buttonRemove) {
         buttonRemove.addEventListener('click', () => {
-            localStorage.clear();
+            localStorage.removeItem('groups');
             this.groups = null;
             this.viewGroups(this.groups);
             document.querySelector('.settings-groups .count').textContent = '0'
@@ -186,10 +215,14 @@ class VkPinnedGroups {
             document.querySelector('.settings-groups .count').textContent = this.groups.length;
         }
     }
-    async init() {
-        await this.getGroups(this.defaultIDS);
-        this.viewGroups(this.groups);
-        this.dropdownVKTemplate();
+    async init(enable) {
+        if (enable == true) {
+            await this.getGroups(this.defaultIDS);
+            this.viewGroups(this.groups);
+            this.dropdownVKTemplate(this.groups.length, enable);
+        }
+
+        this.dropdownVKTemplate(0, enable);
     }
 }
 
