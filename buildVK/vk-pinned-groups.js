@@ -114,9 +114,6 @@ class VkPinnedGroups {
                         <div class="line_cell clear_fix ui_rmenu_item_sel add-new-group">
                             <a class="option_name">Добавить группу</a>
                         </div>
-                        <div class="line_cell clear_fix ui_rmenu_item_sel update-groups">
-                            <a class="option_name">Обновить группы</a>
-                        </div>
                         <div class="line_cell clear_fix ui_rmenu_item_sel remove-groups">
                             <a class="option_name">Удалить группы</a>
                         </div>
@@ -128,19 +125,8 @@ class VkPinnedGroups {
             </div>
         </div>`;
     }
-    eventDropdown({addElement, updateElement, removeElement, offElement}) {
-        this.update(updateElement);
+    eventDropdown({addElement, removeElement, offElement}) {
         this.eventAddNewGroup(addElement)
-    }
-    update(button) {
-        button.addEventListener('click', () => {
-            let ids = '';
-            this.groups.forEach(Group => {
-                ids += Group.screen_name + ',';
-            })
-            this.getGroups(ids);
-            this.viewGroups(this.groups);
-        })
     }
     save(groups) {
         localStorage.setItem('groups', JSON.stringify(groups));
@@ -186,6 +172,7 @@ class VkPinnedGroups {
             })
             this.save(this.groups);
             this.viewGroups(this.groups);
+            document.querySelector('.settings-groups .count').textContent = this.groups.length;
         }
     }
     async init() {
