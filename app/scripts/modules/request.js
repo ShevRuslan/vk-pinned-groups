@@ -1,9 +1,10 @@
-class Request {
+import data from '../config';
+export default class Request {
     constructor() {
-        this.token = window.config.access_token;
+        this.token = data.access_token;
     }
     createRequest(method, config, token) {
-        let url = window.config.api_url + method + '?';
+        let url = data.api_url + method + '?';
         for (const param in config) {
             let stringParam =`${param}=${config[param]}`;
             stringParam += '&';
@@ -32,5 +33,3 @@ class Request {
         return await response.json();
     }
 }
-
-window.Request = Request;

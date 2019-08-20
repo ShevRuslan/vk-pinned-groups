@@ -93,7 +93,7 @@ function html() {
 
 function css() {
     return gulp.src(css_files)
-        .pipe(gulp.dest(conf.dest))
+        .pipe(gulp.dest(conf.dest + '/styles/'))
         .pipe(browserSync.reload({ stream: true }))
         .pipe(livereload())
 }

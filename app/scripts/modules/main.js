@@ -1,7 +1,7 @@
+import Request from './request';
 const req = new Request();
 
-
-class VkPinnedGroups {
+export default class VkPinnedGroups {
     constructor() {
         this.groups = null;
         this.init();
@@ -17,7 +17,7 @@ class VkPinnedGroups {
                     'v': '5.95'
                 }
             });
-            this.groups = JSON.parse(groups.response);
+            this.groups = groups.response;
             this.save(this.groups);
         }
         else {
@@ -25,46 +25,21 @@ class VkPinnedGroups {
         }
     }
     viewGroups(groups) {
-        const wrapperGroups = document.querySelector('.groups');
-        if (wrapperGroups.children.length >= 1) {
-            wrapperGroups.innerHTML = '';
+        let wrapperGroups = document.querySelector('.wrapper-icons-group');
+        if (wrapperGroups == null) {
+            wrapperGroups = document.createElement('div');
+            wrapperGroups.classList.add('wrapper-icons-group');
+            document.querySelector('.side_bar_inner').appendChild(wrapperGroups);
         }
-        groups.response.forEach(Group => {
+        groups.forEach(Group => {
             const wrap = document.createElement('div');
             wrap.classList.add('group');
-            wrap.innerHTML =
+            wrap.innerHTML = //html
                 `<a href="https://vk.com/${Group.screen_name}" target="_blank">
                     <img src="${Group.photo_50}"/>
-                    <span>${Group.name}</span>
+                    <p>${Group.name}</p>
                 </a>`;
-            const data = {
-                members: Group.members_count,
-                name: Group.name,
-                photo: Group.photo_100,
-                shortName: Group.screen_name,
-                status: Group.status,
-                id: Group.id
-            }
-            this.eventHover(wrap, data);
             wrapperGroups.appendChild(wrap);
-        })
-    }
-    eventHover(group, {members, name, photo, shortName, status, id}) {
-        group.addEventListener('mouseenter', () => {
-            const htmlElement = this.viewShortDescription({ members, name, photo, shortName, status, id});
-            const desc = group.querySelector('.modal-wrapper-group');
-            if(desc === null) {
-                group.appendChild(htmlElement);
-            }
-            else {
-                desc.style.display = 'flex';
-            }
-        })
-        group.addEventListener('mouseleave', () => {
-            const desc = group.querySelector('.modal-wrapper-group');
-            if(desc != null) {
-                desc.style.display = 'none';
-            }
         })
     }
     save(groups) {
@@ -140,5 +115,3 @@ class VkPinnedGroups {
         this.eventAddNewGroup();
     }
 }
-
-const VKPinnedGroups = new VkPinnedGroups();
