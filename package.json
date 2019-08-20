@@ -1,0 +1,38 @@
+{
+    "name": "vk-livereload",
+    "version": "1.0.0",
+    "description": "Стартовый шаблон для написания модификаций для vk.com (или других сайтов) с живой перезагрузкой и автоматической подгрузкой скриптов на страницу",
+    "main": "test.js",
+    "scripts": {
+        "dev": "gulp",
+        "build": "gulp build"
+    },
+    "keywords": [
+        "vk",
+        "vkontakte",
+        "livereload",
+        "autoload",
+        "boilerplate"
+    ],
+    "author": "neyasbltb_88",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/core": "^7.4.3",
+        "@babel/plugin-transform-regenerator": "^7.4.3",
+        "@babel/plugin-transform-runtime": "^7.4.3",
+        "@babel/preset-env": "^7.4.3",
+        "@babel/runtime": "^7.4.3",
+        "babel-loader": "^8.0.5",
+        "browser-sync": "^2.26.3",
+        "chalk": "^2.4.2",
+        "del": "^4.1.0",
+        "gulp": "3.9.1",
+        "gulp-if": "^2.0.2",
+        "gulp-livereload": "4.0.1",
+        "gulp-notify": "^3.2.0",
+        "gulp-sourcemaps": "^2.6.5",
+        "gulp-util": "^3.0.8",
+        "webpack-stream": "^5.2.1"
+    }
+}
