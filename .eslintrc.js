@@ -13,5 +13,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
+        "camelcase": [1, {"properties": "always"}] 
     }
 };
